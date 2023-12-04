@@ -2,7 +2,10 @@ import { Section } from './Section/Section';
 import { FeedbackOptions } from './FeedbackOptions/FeedbackOptions';
 import { Statistics } from './Statistics/Statistics';
 import { Notification } from './Notification/Notification';
-import { useRatingsContext } from './RatingsContext/RatingsContext';
+import {
+  RatingsProvider,
+  useRatingsContext,
+} from './RatingsContext/RatingsContext';
 import { useEffect } from 'react';
 
 export const App = () => {
@@ -25,16 +28,18 @@ export const App = () => {
 
   return (
     <>
-      <Section title="Please leave feedback">
-        <FeedbackOptions />
-      </Section>
-      <Section title="Statistics">
-        {total > 0 ? (
-          <Statistics />
-        ) : (
-          <Notification message="There is no feedback" />
-        )}
-      </Section>
+      <RatingsProvider>
+        <Section title="Please leave feedback">
+          <FeedbackOptions />
+        </Section>
+        <Section title="Statistics">
+          {total > 0 ? (
+            <Statistics />
+          ) : (
+            <Notification message="There is no feedback" />
+          )}
+        </Section>
+      </RatingsProvider>
     </>
   );
 };
